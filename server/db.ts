@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 
 dotenv.config({ quiet: true });
 
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL belum diset. Tambahkan environment variable DATABASE_URL di Render.');
+}
+
 // Menggunakan koneksi Pool dari Supabase
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -13,8 +17,9 @@ const pool = new Pool({
 });
 
 export const initDB = async () => {
+  let client;
   try {
-    const client = await pool.connect();
+    client = await pool.connect();
     
     // Migration script - Create necessary tables (Syntax disesuaikan untuk Postgres)
     await client.query(`
@@ -82,13 +87,19 @@ export const initDB = async () => {
       );
     }
     
-    client.release();
     console.log("Database PostgreSQL berhasil diinisialisasi! 🚀");
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`Gagal inisialisasi database: ${message}`);
-    console.error("Cek koneksi internet/VPN/firewall dan pastikan DATABASE_URL Supabase benar.");
+    console.error("Cek environment variable DATABASE_URL di Render dan pastikan URL koneksi Supabase benar.");
+    throw err;
+  } finally {
+    client?.release();
   }
+};
+
+export const checkDB = async () => {
+  await pool.query('SELECT 1');
 };
 
 export default pool;

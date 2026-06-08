@@ -64,6 +64,8 @@ router.post('/auth/login', async (req, res) => {
     const token = jwt.sign({ id: user.id, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: '1d' });
     res.json({ token, user: { id: user.id, name: user.name, role: user.role, email: user.email } });
   } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`Login database error for ${email || 'unknown email'}: ${message}`);
     res.status(500).json({ error: 'Database error' });
   }
 });

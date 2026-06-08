@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { createServer as createHttpServer } from 'node:http';
-import pool, { initDB } from './server/db.ts';
+import { checkDB, initDB } from './server/db.ts';
 import apiRouter from './server/api.ts';
 
 async function startServer() {
@@ -20,8 +20,15 @@ async function startServer() {
   app.use('/api', apiRouter);
 
   // Health check
-  app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok' });
+  app.get('/api/health', async (req, res) => {
+    try {
+      await checkDB();
+      res.json({ status: 'ok', database: 'ok' });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`Health check database error: ${message}`);
+      res.status(503).json({ status: 'error', database: 'error' });
+    }
   });
 
   // Vite middleware for development or Static files for production
