@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
 import { Files, Home, FileText, CheckSquare, LogOut, Bell, BarChart3, ArrowLeft } from 'lucide-react';
 import { User } from '../types';
+import { apiUrl } from '../lib/api';
 
 interface SidebarProps {
   user: User | null;
@@ -17,7 +18,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
   useEffect(() => {
     if (!user || isAdmin) return;
 
-    fetch('/api/notifications', {
+    fetch(apiUrl('/api/notifications'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then(res => res.json())

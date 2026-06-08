@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { BarChart3, Users, FileText } from 'lucide-react';
+import { apiUrl } from '../lib/api';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ totalRevenue: 0, activeOrders: 0, completedOrders: 0 });
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/api/admin/stats', {
+    fetch(apiUrl('/api/admin/stats'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Clock, Printer, RefreshCw } from 'lucide-react';
 import { Order } from '../types';
 import { cn } from '../lib/utils';
+import { apiUrl } from '../lib/api';
 
 const queueStatuses: Order['status'][] = ['Waiting Queue', 'In Process', 'Printing', 'Completed', 'Cancelled'];
 
@@ -11,7 +12,7 @@ export default function AdminQueue() {
 
   const fetchQueue = () => {
     setLoading(true);
-    fetch('/api/admin/queue', {
+    fetch(apiUrl('/api/admin/queue'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then(res => res.json())
@@ -24,7 +25,7 @@ export default function AdminQueue() {
   }, []);
 
   const updateStatus = async (id: string, status: Order['status']) => {
-    await fetch(`/api/orders/${id}/status`, {
+    await fetch(apiUrl(`/api/orders/${id}/status`), {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

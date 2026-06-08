@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Order } from '../types';
+import { apiUrl } from '../lib/api';
 
 export default function CustomerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    fetch('/api/orders', {
+    fetch(apiUrl('/api/orders'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())

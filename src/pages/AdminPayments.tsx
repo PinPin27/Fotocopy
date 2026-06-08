@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CreditCard, RefreshCw, ShieldCheck } from 'lucide-react';
 import { Payment } from '../types';
 import { cn } from '../lib/utils';
+import { apiUrl } from '../lib/api';
 
 const paymentStatuses: Payment['status'][] = ['Unpaid', 'Pending', 'Paid', 'Rejected'];
 
@@ -11,7 +12,7 @@ export default function AdminPayments() {
 
   const fetchPayments = () => {
     setLoading(true);
-    fetch('/api/admin/payments', {
+    fetch(apiUrl('/api/admin/payments'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then(res => res.json())
@@ -24,7 +25,7 @@ export default function AdminPayments() {
   }, []);
 
   const updatePayment = async (id: string, status: Payment['status']) => {
-    await fetch(`/api/admin/payments/${id}`, {
+    await fetch(apiUrl(`/api/admin/payments/${id}`), {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

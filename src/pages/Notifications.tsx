@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Bell, CheckCheck } from 'lucide-react';
 import { Notification } from '../types';
 import { cn } from '../lib/utils';
+import { apiUrl } from '../lib/api';
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -9,7 +10,7 @@ export default function Notifications() {
 
   const fetchNotifications = () => {
     setLoading(true);
-    fetch('/api/notifications', {
+    fetch(apiUrl('/api/notifications'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then(res => res.json())
@@ -22,7 +23,7 @@ export default function Notifications() {
   }, []);
 
   const markAllRead = async () => {
-    await fetch('/api/notifications/read-all', {
+    await fetch(apiUrl('/api/notifications/read-all'), {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });

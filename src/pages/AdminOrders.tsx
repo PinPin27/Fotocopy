@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CheckCircle2, Clock, CreditCard, Printer, RefreshCw, Search } from 'lucide-react';
 import { Order, Payment } from '../types';
 import { cn } from '../lib/utils';
+import { apiUrl } from '../lib/api';
 
 const orderStatuses: Order['status'][] = [
   'Waiting Payment',
@@ -48,8 +49,8 @@ export default function AdminOrders() {
 
     try {
       const [ordersRes, paymentsRes] = await Promise.all([
-        fetch('/api/orders', { headers: authHeaders }),
-        fetch('/api/admin/payments', { headers: authHeaders }),
+        fetch(apiUrl('/api/orders'), { headers: authHeaders }),
+        fetch(apiUrl('/api/admin/payments'), { headers: authHeaders }),
       ]);
 
       if (!ordersRes.ok) throw new Error('Gagal memuat data order.');
@@ -98,7 +99,7 @@ export default function AdminOrders() {
   const activeQueue = orders.filter(order => ['Waiting Queue', 'In Process', 'Printing'].includes(order.status)).length;
 
   const updateOrderStatus = async (id: string, status: Order['status']) => {
-    await fetch(`/api/orders/${id}/status`, {
+    await fetch(apiUrl(`/api/orders/${id}/status`), {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ export default function AdminOrders() {
   };
 
   const updatePaymentStatus = async (id: string, status: Payment['status']) => {
-    await fetch(`/api/admin/payments/${id}`, {
+    await fetch(apiUrl(`/api/admin/payments/${id}`), {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -125,7 +126,7 @@ export default function AdminOrders() {
     setError('');
 
     try {
-      const orderRes = await fetch(`/api/orders/${orderId}/status`, {
+      const orderRes = await fetch(apiUrl(`/api/orders/${orderId}/status`), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +138,7 @@ export default function AdminOrders() {
       if (!orderRes.ok) throw new Error('Gagal menandai order sebagai selesai.');
 
       if (payment) {
-        const paymentRes = await fetch(`/api/admin/payments/${payment.id}`, {
+        const paymentRes = await fetch(apiUrl(`/api/admin/payments/${payment.id}`), {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

@@ -3,13 +3,14 @@ import { User, Order } from '../types';
 import { Upload } from 'lucide-react';
 import { Link } from 'react-router';
 import { cn } from '../lib/utils';
+import { apiUrl } from '../lib/api';
 
 export default function CustomerDashboard({ user }: { user: User | null }) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/api/orders', {
+    fetch(apiUrl('/api/orders'), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => {
