@@ -1,4 +1,4 @@
-# Smart Photocopy System — Web-Based Printing Order & Queue Management
+# Sistem Fotocopy Digital — Web-Based Printing Order & Queue Management
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -8,12 +8,11 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
-**Smart Photocopy System** adalah aplikasi berbasis web *full-stack* yang mendigitalisasi proses pemesanan cetak dokumen, perhitungan biaya cetak secara otomatis (*dynamic pricing*), manajemen antrean pengerjaan secara *real-time*, hingga pencatatan transaksi untuk bisnis fotocopy dan percetakan.
+**Sistem Fotocopy Digital** adalah aplikasi berbasis web *full-stack* yang mendigitalisasi proses pemesanan cetak dokumen, perhitungan biaya cetak secara otomatis (*dynamic pricing*), manajemen antrean pengerjaan secara *real-time*, hingga pencatatan transaksi untuk bisnis fotocopy dan percetakan.
 
 ---
 
-<!-- Ganti link gambar di bawah dengan screenshot/GIF mockup aplikasi Anda -->
-<img width="1280" height="720" alt="Smart Photocopy Overview" src="https://via.placeholder.com/1280x720?text=Smart+Photocopy+System+Dashboard+Overview" />
+<img width="1760" height="990" alt="fotocopy" src="https://github.com/user-attachments/assets/af587d7e-3e19-4d8b-8f58-6245883ed82b" />
 
 ---
 
